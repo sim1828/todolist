@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo List App</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #949aac;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 90px auto;
+      background-color: rgb(138, 138, 180);
+     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    }
+
+    #taskInput {
+      width: 50%;
+      margin-right: 10px;
+      margin-bottom: 30px;
+    }
+
+    #addBtn {
+      width: 30%;
+    }
+
+    .task-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .task {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      margin-bottom: 8px;
+      border-radius: 5px;
+    }
+    .btn {
+      background-color: rgb(0, 0, 0);
+      border-radius: 20px;
+      height: 37px;
+      color: white;
+      box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    }
+
+    .btn:hover {
+      background-color: #d48e8e;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="text-center" style="font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">Todo List</h1>
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" id="taskInput" placeholder="Add task">
+      <button class="btn" id="addBtn">Submit</button>
+    </div>
+    <ul class="task-list" id="taskList">
+    </ul>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const taskInput = document.getElementById('taskInput');
+      const addBtn = document.getElementById('addBtn');
+      const taskList = document.getElementById('taskList');
+      let serialNumber = 1;
+
+      addBtn.addEventListener('click', function () {
+        const taskText = taskInput.value.trim();
+
+        if (taskText !== '') {
+          addTask(taskText, serialNumber++);
+          taskInput.value = '';
+        }
+      });
+
+      taskInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          addBtn.click();
+        }
+      });
+
+      function addTask(taskText, serialNumber) {
+        const taskItem = document.createElement('li');
+        taskItem.classList.add('task');
+
+       
+        const taskContent = document.createElement('span');
+        taskContent.textContent = `${serialNumber}. ${taskText}`;
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.classList.add('btn', 'btn-danger', 'btn-sm');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.addEventListener('click', function () {
+          taskItem.remove();
+        });
+
+        
+        taskItem.appendChild(taskContent);
+        taskItem.appendChild(deleteBtn);
+
+        taskList.appendChild(taskItem);
+      }
+    });
+  </script>
+</body>
+
+</html>
